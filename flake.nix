@@ -8,7 +8,7 @@
       let pkgs = import nixpkgs { inherit system; };
       in {
         devShell = pkgs.mkShell {
-          buildInputs = with pkgs; [ neofetch rustup yarn ];
+          buildInputs = with pkgs; [ neofetch rustup yarn cmake cargo docker libiconv docker-compose];
           shellHook = ''
               exec zsh -l
           '';
