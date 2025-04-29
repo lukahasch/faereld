@@ -1,0 +1,2 @@
+clean:
+	sleep 1
