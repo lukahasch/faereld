@@ -1,2 +1,5 @@
 clean:
-	sleep 1
+	rm -rf ./server
+
+build:
+	sleep 0
