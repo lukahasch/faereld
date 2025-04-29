@@ -1,20 +1,17 @@
 {
-  description = "A basic Nix flake";
-
   inputs = {
-    nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
+    nixpkgs.url = "github:nixos/nixpkgs/nixpkgs-unstable";
+    flake-utils.url = "github:numtide/flake-utils";
   };
-
-  outputs = { self, nixpkgs }:
-    let
-      pkgs = import nixpkgs { system = "x86_64-linux"; };
-    in
-    {
-      devShells.default = pkgs.mkShell {
-        buildInputs = with pkgs; [
-            rustup
-            yarn
-        ];
-      };
-    };
+  outputs = inputs@{ self, nixpkgs, flake-utils, ... }:
+    flake-utils.lib.eachDefaultSystem (system:
+      let pkgs = import nixpkgs { inherit system; };
+      in {
+        devShell = pkgs.mkShell {
+          buildInputs = with pkgs; [ neofetch rustup yarn ];
+          shellHook = ''
+              exec zsh -l
+          '';
+        };
+      });
 }
